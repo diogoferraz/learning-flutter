@@ -5,6 +5,7 @@ Features implemented in this project are:
 3. Splash screen
 4. Fab button with fadein fadeout animation
 5. Painted bottom navigation
+6. Usage of firebase as back end engine, but in a very loose way so you can easily change providers.
 6. And Many More Widgets ;) 
 
 ### What is next?
