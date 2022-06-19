@@ -3,11 +3,12 @@ Features implemented in this project are:
 1. Authentication (Token handling, navigation, auto signin, auto logout)
 2. Product CRUD sample
 3. Splash screen
-4. Many Widgets ;) 
+4. Fab button with fadein fadeout animation
+5. Painted bottom navigation
+6. And Many More Widgets ;) 
 
-### What is next: 
-* Custom Bottom navigation
-* Dropdown button to login page.
+### What is next?
+* positioning fab buttons to open centralized in the screen.
 
 ## Getting Started
 
