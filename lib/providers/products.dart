@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/http_exception.dart';
@@ -10,6 +11,7 @@ class Products with ChangeNotifier {
   List<Product> _items = [];
   final String? authToken;
   final String? userId;
+  final String apiUrlFirebase = dotenv.get("API_URL_FIREBASE", fallback: "");
 
   Products(this.authToken, this.userId, this._items);
 
@@ -29,8 +31,7 @@ class Products with ChangeNotifier {
     final paramsString = filterByUser
         ? 'auth=$authToken&orderBy="creatorId"&equalTo="$userId"'
         : 'auth=$authToken';
-    var url = Uri.parse(
-        'https://flutter-app-2d9ac-default-rtdb.firebaseio.com/products.json?$paramsString');
+    var url = Uri.parse('https://$apiUrlFirebase/products.json?$paramsString');
     try {
       final response = await http.get(url);
       //FIXME: UGLY SHIT TO MAKE SURE WE DONT FAIL HERE
@@ -43,7 +44,7 @@ class Products with ChangeNotifier {
         return;
       }
       url = Uri.parse(
-          'https://flutter-app-2d9ac-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken');
+          'https://$apiUrlFirebase/userFavorites/$userId.json?auth=$authToken');
       final favoriteResponse = await http.get(url);
       final favoriteData = json.decode(favoriteResponse.body);
       final List<Product> loadedProducts = [];
@@ -66,9 +67,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    final url = Uri.https(
-        'https://flutter-app-2d9ac-default-rtdb.firebaseio.com',
-        '/products.json?auth=$authToken');
+    final url =
+        Uri.https('https://$apiUrlFirebase', '/products.json?auth=$authToken');
     try {
       final response = await http.post(
         url,
@@ -99,8 +99,7 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url = Uri.https(
-          'https://flutter-app-2d9ac-default-rtdb.firebaseio.com',
-          '/products/$id.json?auth=$authToken');
+          'https://$apiUrlFirebase', '/products/$id.json?auth=$authToken');
       await http.patch(url,
           body: json.encode({
             'title': newProduct.title,

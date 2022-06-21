@@ -69,19 +69,19 @@ class ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
               itemBuilder: (_) => [
                 const PopupMenuItem(
-                  child: Text('Only Favorites'),
                   value: FilterOptions.favorites,
+                  child: Text('Only Favorites'),
                 ),
                 const PopupMenuItem(
-                  child: const Text('Show All'),
                   value: FilterOptions.all,
+                  child: Text('Show All'),
                 ),
               ],
             ),
             Consumer<Cart>(
               builder: (_, cart, ch) => Badge(
-                child: ch as Widget,
                 value: cart.itemCount.toString(),
+                child: ch as Widget,
               ),
               child: IconButton(
                 icon: const Icon(

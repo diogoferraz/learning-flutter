@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,8 +33,9 @@ class Auth with ChangeNotifier {
 
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
+    String firebaseApiKey = dotenv.get("API_KEY_FIREBASE", fallback: "");
     final url = Uri.parse(
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyASa_99gZZDDWdRomgrPo_zZnH6Jak_qkQ');
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$firebaseApiKey');
     try {
       final response = await http.post(
         url,
